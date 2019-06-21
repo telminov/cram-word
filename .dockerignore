@@ -1,0 +1,12 @@
+project/local_settings.py
+*.sqlite3
+/.idea/
+node_modules
+venv
+virt_env
+media
+/static
+.coverage
+Dockerfile
+__pycache__/
+*.pyc

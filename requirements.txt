@@ -1,0 +1,8 @@
+django==2.2
+gunicorn==19.9.0
+ipython
+django_filter==2.0.0
+django-bootstrap4==0.0.8
+requests==2.9.1
+raven==6.5.0
+sw-python-utils==0.0.17
