@@ -1,6 +1,14 @@
 {% extends 'core/base.html' %}
 
 {% block container %}
+    {% if object_list|length > 20 %}
+        <a href="create/" class="btn btn-block btn-success">
+            <i class="fa fa-plus"></i>
+            Добавить
+        </a>
+        <br>
+    {% endif %}
+
     {% for object in object_list %}
         <a href="{{ object.pk }}/" class="btn btn-block btn-outline-secondary">
             {{ object }}
