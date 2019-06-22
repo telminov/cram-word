@@ -78,11 +78,11 @@ class Training(models.Model):
 
 
 class TrainingWord(models.Model):
-    training = models.ForeignKey(Training, on_delete=models.CASCADE)
-    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    training = models.ForeignKey(Training, on_delete=models.CASCADE, related_name='training_words')
+    word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name='training_words')
     answer = models.CharField('Ответ', max_length=255, blank=True)
     is_right = models.NullBooleanField('Правильный ли ответ')
     answer_dt = models.DateTimeField('Время ответа', null=True, blank=Training)
-
+    answer_options = models.ManyToManyField(Word)
 
 

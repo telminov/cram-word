@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+
+{% block container %}
+    <div class="alert alert-warning">
+        Вы действительно хотите прекратить тренировку?
+    </div>
+
+    <form method="post">{% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+                <a href=".." class="btn btn-outline-secondary btn-block">
+                    Назад
+                </a>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-warning btn-block">
+                    Прекратить
+                </button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

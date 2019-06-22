@@ -22,6 +22,8 @@ urlpatterns = [
     path('word/<int:pk>/delete/', word.Delete.as_view(), name='word_delete'),
 
     path('training/create/', training.Create.as_view(), name='training_create'),
+    path('training/<int:pk>/', training.Process.as_view(), name='training_process'),
+    path('training/<int:pk>/cancel/', training.Cancel.as_view(), name='training_cancel'),
 
 ]
 
