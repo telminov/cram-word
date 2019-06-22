@@ -1,0 +1,32 @@
+{% extends 'core/object_detail.html' %}
+
+{% block detail %}
+    <div class="row">
+        <div class="col-4 text-right">Слово</div>
+        <div class="col-6 text-left"><strong>{{ object.name }}</strong></div>
+    </div>
+
+    <div class="row">
+        <div class="col-4 text-right">Перевод</div>
+        <div class="col-6 text-left"><strong>{{ object.translation }}</strong></div>
+    </div>
+
+    {% if object.transcription %}
+    <div class="row">
+        <div class="col-4 text-right">Транскрипция</div>
+        <div class="col-6 text-left"><strong>[{{ object.transcription }}]</strong></div>
+    </div>
+    {% endif %}
+
+    <br>
+    <div class="row">
+        <div class="col-4 text-right">Разделы</div>
+        <div class="col-6 text-left">{{ object.sections.all|join:', ' }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-4 text-right">Язык</div>
+        <div class="col-6 text-left">{{ object.language }}</div>
+    </div>
+
+{% endblock %}

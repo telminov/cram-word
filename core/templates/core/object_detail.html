@@ -3,11 +3,13 @@
 {% block container %}
     <h2>{{ object }}</h2>
 
+    {% block detail %}{% endblock %}
+
     <br>
     <div class="row">
         <div class="col-6">
             <a href=".." class="btn btn-outline-secondary btn-block">
-                Назад
+                К списку
             </a>
         </div>
         <div class="col-6">
