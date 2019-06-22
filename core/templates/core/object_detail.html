@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+
+{% block container %}
+    <h2>{{ object }}</h2>
+
+    <br>
+    <div class="row">
+        <div class="col-6">
+            <a href=".." class="btn btn-outline-secondary btn-block">
+                Назад
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="update/" class="btn btn-primary btn-block">
+                Изменить
+            </a>
+        </div>
+    </div>
+{% endblock %}

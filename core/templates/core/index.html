@@ -1,8 +1,17 @@
 {% extends 'core/base.html' %}
 
 {% block container %}
-    <br>
-    <br>
-    <br>
-    Hello!
+
+    <a href="" class="btn btn-block btn-success">
+        Тренировка
+    </a>
+
+    <a href="{% url 'core:section_list' %}" class="btn btn-block btn-primary">
+        Разделы
+    </a>
+
+    <a href="" class="btn btn-block btn-secondary">
+        Статистика
+    </a>
+
 {% endblock %}

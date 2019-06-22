@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+
+{% block container %}
+    {% for object in object_list %}
+        <a href="{{ object.pk }}/" class="btn btn-block btn-outline-secondary">
+            {{ object }}
+        </a>
+    {% endfor %}
+
+    <br>
+    <a href="create/" class="btn btn-block btn-success">
+        <i class="fa fa-plus"></i>
+        Добавить
+    </a>
+{% endblock %}
