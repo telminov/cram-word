@@ -2,6 +2,7 @@ from django.urls import path
 from core.views import index
 from core.views import section
 from core.views import word
+from core.views import training
 
 app_name = 'core'
 
@@ -19,6 +20,8 @@ urlpatterns = [
     path('word/<int:pk>/', word.Detail.as_view(), name='word_detail'),
     path('word/<int:pk>/update/', word.Update.as_view(), name='word_update'),
     path('word/<int:pk>/delete/', word.Delete.as_view(), name='word_delete'),
+
+    path('training/create/', training.Create.as_view(), name='training_create'),
 
 ]
 

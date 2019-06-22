@@ -51,12 +51,26 @@ class Word(models.Model):
     def __str__(self):
         return self.name
 
+    @staticmethod
+    def filter_unknown(words):
+        unknown = []
+        for w in words:
+            trainings = w.trainigs.filter(answer_dt__isnull=False).order_by('answer_dt')
+            if not trainings.exists() or not trainings.last().is_right:
+                unknown.append(w)
+        return unknown
+
 
 class Training(models.Model):
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     language = models.ForeignKey(Language, verbose_name='Язык', on_delete=models.CASCADE)
-    direction = models.CharField('Направление', max_length=255, choices=consts.DIRECTION_CHOICES)
+    sections = models.ManyToManyField(Section, verbose_name='Раздел', blank=True, related_name='trainings')
+    direction = models.CharField('Направление', max_length=255, choices=consts.DIRECTION_CHOICES,
+                                 default=consts.DIRECTION_TO_RUS)
+    mode = models.CharField('Режим', max_length=255, choices=consts.TRAINING_MODE_CHOICES,
+                            default=consts.TRAINING_MODE_ALL_WORDS, )
     created = models.DateTimeField(auto_now_add=True)
+    canceled = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Тренировка'

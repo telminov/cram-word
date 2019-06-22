@@ -18,7 +18,6 @@ class Create(CreateView):
     template_name = 'core/object_create.html'
     model = models.Word
     fields = ('name', 'translation', 'transcription', 'sections', 'language', )
-    success_url = reverse_lazy('core:word_list')
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
