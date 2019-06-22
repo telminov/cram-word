@@ -38,7 +38,7 @@ class Word(models.Model):
     name = models.CharField('Слово', max_length=255)
     translation = models.CharField('Перевод', max_length=255)
     transcription = models.CharField('Транскрипция', max_length=255, blank=True)
-    sections = models.ManyToManyField(Section, verbose_name='Раздел', blank=True)
+    sections = models.ManyToManyField(Section, verbose_name='Раздел', blank=True, related_name='words')
 
     created = models.DateTimeField(auto_now_add=True)
 

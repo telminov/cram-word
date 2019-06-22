@@ -10,7 +10,7 @@ class List(ListView):
 
 
 class Detail(DetailView):
-    template_name = 'core/object_detail.html'
+    template_name = 'core/section/detail.html'
     model = models.Section
 
 

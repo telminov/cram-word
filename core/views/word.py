@@ -25,6 +25,20 @@ class Create(CreateView):
         form.instance.user = self.request.user
         return form
 
+    def get_initial(self):
+        initial = super().get_initial()
+        if self.request.GET.get('section'):
+            section = models.Section.objects.get(id=self.request.GET['section'])
+            initial['sections'] = [section.pk]
+            if section.words.exists():
+                initial['language'] = section.words.last().language
+        return initial
+
+    def get_success_url(self):
+        if self.request.GET.get('section'):
+            return reverse('core:section_detail', kwargs={'pk': self.request.GET['section']})
+        return reverse('core:word_list')
+
 
 class Update(UpdateView):
     template_name = 'core/object_update.html'
