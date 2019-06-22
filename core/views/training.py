@@ -104,7 +104,7 @@ class Process(TemplateView):
             messages.success(request, f'{c["question"]} - "{answer}". Правильно.')
         else:
             messages.error(
-                request, f'"{answer}" - не правильно. Правильный ответ для "" - "{right_answer}".')
+                request, f'"{answer}" - не правильно. Правильный ответ для "{c["question"]}" - "{right_answer}".')
 
         if training.training_words.filter(answer_dt__isnull=True).exists():
             return redirect(reverse('core:training_process', kwargs={'pk': training.pk}))
