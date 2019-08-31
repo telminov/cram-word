@@ -1,0 +1,38 @@
+# docker build -t telminov/cram_word .
+# docker push telminov/cram_word
+FROM telminov/ubuntu-18.04-python3.7
+
+RUN apt-get clean && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        vim \
+        curl \
+        supervisor \
+        npm \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PYTHONUNBUFFERED 1
+
+ADD requirements.txt /tmp/
+RUN pip3 install -r /tmp/requirements.txt
+
+COPY . /opt/app
+WORKDIR /opt/app
+
+RUN cp project/local_settings.sample.py project/local_settings.py
+
+COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+COPY supervisor/prod.conf /etc/supervisor/conf.d/app.conf
+
+EXPOSE 80
+VOLUME /data/
+VOLUME /conf/
+VOLUME /static/
+VOLUME /media/
+
+
+CMD test "$(ls /conf/local_settings.py)" || cp project/local_settings.sample.py /conf/local_settings.py; \
+    rm project/local_settings.py;  ln -s /conf/local_settings.py project/local_settings.py; \
+    rm -rf static; ln -s /static static; \
+    python3 ./manage.py migrate; \
+    python3 ./manage.py collectstatic --noinput; \
+    npm install; rm -rf static/node_modules; mv node_modules static/; \
+    /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon

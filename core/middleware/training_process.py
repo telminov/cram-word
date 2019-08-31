@@ -18,7 +18,8 @@ class TrainingProcessMiddleware(object):
         if not request.user.is_authenticated:
             return None
 
-        if view_func.view_class in (core.views.training.Process, core.views.training.Cancel):
+        if hasattr(view_func, 'view_class') \
+                and view_func.view_class in (core.views.training.Process, core.views.training.Cancel):
             return None
 
         uncompleted_training = models.Training.objects.filter(
