@@ -9,7 +9,13 @@ User = get_user_model()
 
 
 class Language(models.Model):
+    CODE_CHOICES = (
+        ('en', 'Английский'),
+        ('fr', 'Французский'),
+    )
+
     name = models.CharField('Название', max_length=255, unique=True)
+    code = models.CharField('Код', max_length=10, default='en', choices=CODE_CHOICES)
 
     class Meta:
         verbose_name = 'Язык'

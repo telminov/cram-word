@@ -1,0 +1,101 @@
+{% extends 'core/object_create.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block container %}
+    <form method="post">{% csrf_token %}
+
+        <div class="row">
+            <div class="col-10">
+                {% bootstrap_field form.name layout='horizontal' %}
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn" name="to_rus">
+                    <i class="fa fa-magic"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-10">
+                {% bootstrap_field form.translation layout='horizontal' %}
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn" name="from_rus">
+                    <i class="fa fa-magic"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-10">
+                {% bootstrap_field form.transcription layout='horizontal' %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-10">
+                {% bootstrap_field form.sections layout='horizontal' %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-10">
+                {% bootstrap_field form.language layout='horizontal' %}
+            </div>
+        </div>
+
+
+        <button class="btn btn-success btn-block" name="create">Создать</button>
+    </form>
+{% endblock %}
+
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'core/js/ya_dictionary.js' %}"></script>
+    <script>
+        $(function () {
+            // перевод с английского
+            $('form button[name=to_rus]').click(function() {
+                console.log('Click!');
+
+                let word = $('form input[name=name]').val();
+                let langId = $('form select[name=language]').val();
+
+                if (word && langId) {
+                    yaDictToRus(word, langId, function(result) {
+                        if (!result)
+                            return;
+
+                        $('form input[name=translation]').val(result.translation);
+                        $('form input[name=transcription]').val(result.transcription);
+
+                        $('button[name=create]').focus();
+                    })
+                }
+            });
+
+            // перевод с русского
+            $('form button[name=from_rus]').click(function() {
+                console.log('Click!');
+
+                let rusWord = $('form input[name=translation]').val();
+                let langId = $('form select[name=language]').val();
+
+                if (rusWord && langId) {
+                    yaDictFromRus(rusWord, langId, function(result) {
+                        if (!result)
+                            return;
+
+                        $('form input[name=name]').val(result.translation);
+                        $('form input[name=transcription]').val(result.transcription);
+
+                        $('button[name=create]').focus();
+                    })
+                }
+
+            });
+        })
+    </script>
+{% endblock %}

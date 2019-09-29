@@ -3,6 +3,7 @@ from core.views import index
 from core.views import section
 from core.views import word
 from core.views import training
+from core.views import rest
 
 app_name = 'core'
 
@@ -24,6 +25,9 @@ urlpatterns = [
     path('training/create/', training.Create.as_view(), name='training_create'),
     path('training/<int:pk>/', training.Process.as_view(), name='training_process'),
     path('training/<int:pk>/cancel/', training.Cancel.as_view(), name='training_cancel'),
+
+    path('rest/ya_dict/from_rus/', rest.YaDictFromRus.as_view(), name='ya_dict_from_rus'),
+    path('rest/ya_dict/to_rus/', rest.YaDictToRus.as_view(), name='ya_dict_to_rus'),
 
 ]
 

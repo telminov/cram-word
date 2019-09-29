@@ -15,7 +15,7 @@ class Detail(DetailView):
 
 
 class Create(CreateView):
-    template_name = 'core/object_create.html'
+    template_name = 'core/word/create.html'
     model = models.Word
     fields = ('name', 'translation', 'transcription', 'sections', 'language', )
 

@@ -137,6 +137,12 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/logout(.*)$',
 )
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DATE_INPUT_FORMATS': DATE_INPUT_FORMATS,
+}
+
 try:
     from project.local_settings import *
 except ImportError:

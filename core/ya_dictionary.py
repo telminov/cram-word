@@ -8,7 +8,7 @@ import requests
 from django.conf import settings
 
 
-def from_rus(rus_word: str, lang_code: str) -> Optional[str]:
+def from_rus(rus_word: str, lang_code: str) -> Optional[dict]:
     url = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup'
     params = {
         'key': settings.YA_API_KEY,
@@ -20,7 +20,12 @@ def from_rus(rus_word: str, lang_code: str) -> Optional[str]:
 
     response_result = response.json()
     if response_result['def']:
-        return response_result['def'][0]['tr'][0]['text']
+        translation = response_result['def'][0]['tr'][0]['text']
+
+        result = to_rus(word=translation, lang_code=lang_code)
+        result['translation'] = translation
+
+        return result
 
 
 def to_rus(word: str, lang_code: str) -> Optional[dict]:
