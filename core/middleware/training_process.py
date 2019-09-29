@@ -18,6 +18,9 @@ class TrainingProcessMiddleware(object):
         if not request.user.is_authenticated:
             return None
 
+        if request.path.startswith('/admin/'):
+            return None
+
         if hasattr(view_func, 'view_class') \
                 and view_func.view_class in (core.views.training.Process, core.views.training.Cancel):
             return None
