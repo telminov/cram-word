@@ -112,6 +112,24 @@ min-height: 100%; z-index: 1000;">
 
     {% block js %}
         <script>
+            $.ajaxSetup({
+                headers: { "X-CSRFToken": '{{csrf_token}}' }
+            });
+
+            function setInputFocus() {
+                let input;
+                $('input, select, textarea').not('.hasDatepicker, :hidden, input[type=radio]').each(function (index, elementCode) {
+                    var element = $(elementCode);
+
+                    if (element.attr('type') != 'hidden' && !input) {
+                        input = element;
+                    }
+                });
+
+                if (input)
+                    input.focus().select();
+            }
+
             $(function() {
                 $('.date').datepicker({dateFormat: 'dd.mm.yy'});
                 $('.hasDatepicker').mask('99.99.9999');
@@ -136,6 +154,8 @@ min-height: 100%; z-index: 1000;">
 
                     $('#loading').show()
                 });
+
+                setInputFocus();
 
                 $('#clearForm').click(function () {
                     $(':input', 'form')
