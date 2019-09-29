@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from core import consts
@@ -30,6 +32,11 @@ class Section(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_language(self) -> Optional[Language]:
+        first_word = self.words.all().first()
+        if first_word:
+            return first_word.language
 
 
 class Word(models.Model):

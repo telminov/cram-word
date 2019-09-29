@@ -30,11 +30,16 @@ class Create(CreateView):
         if trainings.exists():
             initial['language'] = trainings.last().language
 
+        if self.request.GET.get('language'):
+            initial['language'] = models.Language.objects.get(id=self.request.GET['language'])
+
+        if self.request.GET.get('sections'):
+            initial['sections'] = models.Section.objects.get(id__in=self.request.GET.getlist('sections'))
+
         return initial
 
     def form_valid(self, form):
         words = models.Word.objects.filter(
-            user=self.request.user,
             language=form.cleaned_data['language'],
         )
         if form.cleaned_data['sections']:
@@ -52,9 +57,13 @@ class Create(CreateView):
         for word in words:
             t_w = models.TrainingWord.objects.create(training=training, word=word)
 
-            answer_options = [w for w in words if w != word][:4]
+            all_options = [w for w in words if w != word]
+            random.shuffle(all_options)
+
+            answer_options = all_options[:4]
             answer_options.append(word)
             random.shuffle(answer_options)
+
             t_w.answer_options.add(*answer_options)
 
         return response

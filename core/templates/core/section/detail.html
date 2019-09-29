@@ -5,9 +5,11 @@
 
     <hr>
 
-    <a href="{# TODO #}" class="btn btn-block btn-success">
+    {% if object.words.exists %}
+    <a href="{% url 'core:training_create' %}?language={{ object.get_language.id }}&sections={{ object.id }}" class="btn btn-block btn-success">
         Тренировка
     </a>
+    {% endif %}
 
     <a href="{% url 'core:word_create' %}?section={{ object.pk }}" class="btn btn-block btn-primary">
         Добавить слово
