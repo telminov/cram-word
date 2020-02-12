@@ -1,4 +1,4 @@
-django==2.2
+django==2.2.10
 gunicorn==19.9.0
 ipython
 django_filter==2.0.0
