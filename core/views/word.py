@@ -8,6 +8,11 @@ class List(ListView):
     template_name = 'core/object_list.html'
     model = models.Word
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(user=self.request.user)
+        return qs
+
 
 class Detail(DetailView):
     template_name = 'core/word/detail.html'
