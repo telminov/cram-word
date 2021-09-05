@@ -29,6 +29,23 @@ class Create(CreateView):
         form.instance.user = self.request.user
         return form
 
+    def form_valid(self, form):
+        # если такое слово в базе уже есть, то используем его
+        word_qs = self.model.objects.filter(
+            user=self.request.user,
+            language=form.cleaned_data['language'],
+            name=form.cleaned_data['name'],
+        )
+        if word_qs:
+            # разделы объединим с предыдущими разделами слова
+            form.cleaned_data['sections'] = list(form.cleaned_data['sections']) + list(word_qs[0].sections.all())
+            form.instance = word_qs[0]
+            # остальные поля обновим из текущей формы
+            form.instance.translation = form.cleaned_data['translation']
+            form.instance.transcription = form.cleaned_data['transcription']
+
+        return super().form_valid(form)
+
     def get_initial(self):
         initial = super().get_initial()
         if self.request.GET.get('section'):
